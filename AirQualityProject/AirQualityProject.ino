@@ -287,12 +287,17 @@ void prepareAirMeasurement() {
   delay(1000);
   }
 }
-
-#define BLUE_PM10 10 //color lvls used currently for all 3 of measurements
-#define GREEN_PM10 30
+// reference from EU
+#define BLUE_PM10 20 
+#define GREEN_PM10 35
 #define YELLOW_PM10 50
-#define ORANGE_PM10 70
-#define RED_PM10 90
+#define ORANGE_PM10 100
+
+#define BLUE_PM2_5 10 
+#define GREEN_PM2_5 20
+#define YELLOW_PM2_5 25
+#define ORANGE_PM2_5 50
+
 void updatePM10Led() {
     if (pm10value < BLUE_PM10) {
       leds[0] = CRGB(0, 0, 133); 
@@ -302,44 +307,40 @@ void updatePM10Led() {
       leds[0] = CRGB(133, 133, 0);
     } else if (pm10value < ORANGE_PM10) {
       leds[0] = CRGB(133, 33, 0);
-    } else if (pm10value < RED_PM10) {
+    } else { /*RED_PM10*/
       leds[0] = CRGB(133, 0, 0);
-    } else {
-      leds[0] = CRGB(133, 133, 133);
     }
 }
 
 void updatePM02_5Led() {
-    if (pm02_5value < BLUE_PM10) {
+    if (pm02_5value < BLUE_PM2_5) {
       leds[1] = CRGB(0, 0, 133); 
-    } else if (pm02_5value < GREEN_PM10) {
+    } else if (pm02_5value < GREEN_PM2_5) {
       leds[1] = CRGB(0, 133, 0);
-    } else if (pm02_5value < YELLOW_PM10) {
+    } else if (pm02_5value < YELLOW_PM2_5) {
       leds[1] = CRGB(133, 133, 0);
-    } else if (pm02_5value < ORANGE_PM10) {
+    } else if (pm02_5value < ORANGE_PM2_5) {
       leds[1] = CRGB(133, 33, 0);
-    } else if (pm02_5value < RED_PM10) {
+    } else { /*RED_PM2_5*/
       leds[1] = CRGB(133, 0, 0);
-    } else {
-      leds[1] = CRGB(133, 133, 133);
     }
 }
 
 void updatePM01Led() {
-    if (pm01value < BLUE_PM10) {
+    if (pm01value < BLUE_PM2_5) {
       leds[2] = CRGB(0, 0, 133); 
-    } else if (pm01value < GREEN_PM10) {
+    } else if (pm01value < GREEN_PM2_5) {
       leds[2] = CRGB(0, 133, 0);
-    } else if (pm01value < YELLOW_PM10) {
+    } else if (pm01value < YELLOW_PM2_5) {
       leds[2] = CRGB(133, 133, 0);
-    } else if (pm01value < ORANGE_PM10) {
+    } else if (pm01value < ORANGE_PM2_5) {
       leds[2] = CRGB(133, 33, 0);
-    } else if (pm01value < RED_PM10) {
-      leds[2] = CRGB(133, 0, 0);
     } else {
-      leds[2] = CRGB(133, 133, 133);
+      leds[2] = CRGB(133, 0, 0);
     }
 }
+
+
 
 void updateLeds() {
     updatePM10Led();
