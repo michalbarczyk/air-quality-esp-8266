@@ -1,8 +1,6 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 #include <WiFiClient.h>
-//#include <OneWire.h>
-//#include <DallasTemperature.h>
 #include <FastLED.h>
 
 //------------------------------------------
@@ -298,6 +296,16 @@ void prepareAirMeasurement() {
 #define YELLOW_PM2_5 25
 #define ORANGE_PM2_5 50
 
+#define BLUE_TEMP 10
+#define GREEN_TEMP 20
+#define YELLOW_TEMP 25
+#define ORANGE_TEMP 35
+
+#define BLUE_HUMID 30
+#define GREEN_HUMID 40
+#define YELLOW_HUMID 50
+#define ORANGE_HUMID 60
+
 void updatePM10Led() {
     if (pm10value < BLUE_PM10) {
       leds[0] = CRGB(0, 0, 133); 
@@ -340,12 +348,40 @@ void updatePM01Led() {
     }
 }
 
+void updateTEMPLed() {
+    if (temp < BLUE_TEMP) {
+      leds[3] = CRGB(0, 0, 133); 
+    } else if (temp < GREEN_TEMP) {
+      leds[3] = CRGB(0, 133, 0);
+    } else if (temp < YELLOW_TEMP) {
+      leds[3] = CRGB(133, 133, 0);
+    } else if (temp < ORANGE_TEMP) {
+      leds[3] = CRGB(133, 33, 0);
+    } else { /*RED_TEMP*/
+      leds[3] = CRGB(133, 0, 0);
+    }
+}
 
+void updateHUMIDLed() {
+    if (temp < BLUE_HUMID) {
+      leds[4] = CRGB(0, 0, 133); 
+    } else if (temp < GREEN_HUMID) {
+      leds[4] = CRGB(0, 133, 0);
+    } else if (temp < YELLOW_HUMID) {
+      leds[4] = CRGB(133, 133, 0);
+    } else if (temp < ORANGE_HUMID) {
+      leds[4] = CRGB(133, 33, 0);
+    } else { /*RED_HUMID*/
+      leds[4] = CRGB(133, 0, 0);
+    }
+}
 
 void updateLeds() {
     updatePM10Led();
     updatePM02_5Led();
     updatePM01Led();
+    updateTEMPLed();
+    updateHUMIDLed();
     FastLED.show(); 
 }
 
