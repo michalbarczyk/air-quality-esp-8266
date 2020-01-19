@@ -13,8 +13,8 @@
 
 CRGB leds[NUM_LEDS];
 
-#include "DHT.h"        // including the library of DHT11 temperature and humidity sensor
-#define DHTTYPE DHT11   // DHT 11
+#include "DHT.h"        
+#define DHTTYPE DHT11
 
 #define dht_dpin D4
 DHT dht(dht_dpin, DHTTYPE); 
@@ -32,7 +32,7 @@ ESP8266WebServer server(80);
 #define  MAX_PM   0
 #define  MIN_PM   32767
 
-int incomingByte = 0; // for incoming serial data
+int incomingByte = 0;
 const int MAX_FRAME_LEN = 64;
 char frameBuf[MAX_FRAME_LEN];
 int detectOff = 0;
@@ -57,7 +57,7 @@ struct PMS7003_framestruct {
     unsigned int  checksum;
 } thisFrame;
 
-/************/
+
 char airReport[256];
 int pm01value = 0;
 int pm02_5value = 0;
@@ -146,7 +146,7 @@ void setup() {
 
     Serial.println("\n Serial communication initialized \n");
 
-      //Setup WIFI
+    //Setup WIFI
     WiFi.begin(ssid, password);
     Serial.println("");
   
@@ -285,7 +285,7 @@ void prepareAirMeasurement() {
   delay(1000);
   }
 }
-// reference from EU
+// PM's levels
 #define BLUE_PM10 20 
 #define GREEN_PM10 35
 #define YELLOW_PM10 50
@@ -293,13 +293,18 @@ void prepareAirMeasurement() {
 
 #define BLUE_PM2_5 10 
 #define GREEN_PM2_5 20
-#define YELLOW_PM2_5 25
+#define YELLOW_PM2_5 30
 #define ORANGE_PM2_5 50
 
-#define BLUE_TEMP 10
+#define BLUE_PM1 5
+#define GREEN_PM1 15
+#define YELLOW_PM1 25
+#define ORANGE_PM1 40
+
+#define BLUE_TEMP 15
 #define GREEN_TEMP 20
 #define YELLOW_TEMP 25
-#define ORANGE_TEMP 35
+#define ORANGE_TEMP 30
 
 #define BLUE_HUMID 30
 #define GREEN_HUMID 40
@@ -335,15 +340,15 @@ void updatePM02_5Led() {
 }
 
 void updatePM01Led() {
-    if (pm01value < BLUE_PM2_5) {
+    if (pm01value < BLUE_PM1) {
       leds[2] = CRGB(0, 0, 133); 
-    } else if (pm01value < GREEN_PM2_5) {
+    } else if (pm01value < GREEN_PM1) {
       leds[2] = CRGB(0, 133, 0);
-    } else if (pm01value < YELLOW_PM2_5) {
+    } else if (pm01value < YELLOW_PM1) {
       leds[2] = CRGB(133, 133, 0);
-    } else if (pm01value < ORANGE_PM2_5) {
+    } else if (pm01value < ORANGE_PM1) {
       leds[2] = CRGB(133, 33, 0);
-    } else {
+    } else {/*RED_PM1*/
       leds[2] = CRGB(133, 0, 0);
     }
 }
